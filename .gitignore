@@ -1,0 +1,79 @@
+# Prerequisites
+*.d
+
+ 
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Assets
+#Editor
+Editor/lib/ChaosForSale.lib
+Editor/data/test/*
+Editor/data/Meshes/*
+Editor/data/Audios/*
+Editor/data/Textures/*
+Editor/data/Scenes/*
+Editor/data/Prefabs/*
+Editor/data/shaders/*
+Editor/EditorPreferences.json
+
+#data/
+.zip
+data/test/*
+data/Meshes/*
+data/Audios/*
+data/Textures/*
+data/SFX/*
+!data/SFX/.placeholder
+!data/Textures/.placeholder
+!data/Audios/.placeholder
+!data/Meshes/.placeholder
+
+docs/*
+
+# Precompiled Headers
+*.gch
+*.pch
+
+ 
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+
+
+ 
+
+# Fortran module files
+*.mod
+*.smod
+
+ 
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+
+
+ 
+
+# Executables
+*.exe
+*.out
+*.app
+
+
+.vs
+Release
+Debug
+bin
+obj
+x64
+Win32
+imgui.ini
+data/Tape.zip

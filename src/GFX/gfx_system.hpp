@@ -33,12 +33,16 @@ private:
     Quad mQuadModel;
     //saved data 
         // image 1
+        // image 1s matrix
+        //
         // image 2
+        // image 2s matrix
         
         // Final frame buffer
     FrameBuffer mFinalBuffer;
         // processed frame buffer (image 1 (whatever operation) image 2)
-
+        
+        // processed images matrix
         //shaders for different effects
     ShaderProgram* mQuadToScreen = nullptr;
 };

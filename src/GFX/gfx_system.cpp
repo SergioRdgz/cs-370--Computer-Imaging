@@ -2,6 +2,8 @@
 #include "GFX/Window.hpp"
 #include <GL/glew.h>
 #include <iostream>
+#include <glm/glm.hpp>
+#include <glm/ext/matrix_transform.hpp>
 
 namespace {
 	void checkGLError() {
@@ -102,8 +104,10 @@ void gfx_system::Render()
 	glClearColor(1.0f, 1.0f, 0.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
 
-
-
+	glm::mat4 testing;
+	
+	
+	testing = glm::translate(testing, glm::vec3());
 
 	//render the whatever the final buffer has into the screen
 	//and swap buffers
@@ -125,5 +129,6 @@ void gfx_system::RenderFinalBufferToScreen()
 	mQuadModel.Render();
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, mFinalBuffer.mTexHandle);
+
 	SDL_GL_SwapWindow(Window::GetWindow());
 }

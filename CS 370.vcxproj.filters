@@ -25,6 +25,9 @@
     <Filter Include="Header Files\GFX\Resources">
       <UniqueIdentifier>{7f8574de-5803-4a31-9725-d829073e9523}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Shaders">
+      <UniqueIdentifier>{505ad54d-dde2-4f0e-9a16-43229f1d0f26}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Main.cpp">
@@ -39,6 +42,15 @@
     <ClCompile Include="src\GFX\Windows.cpp">
       <Filter>Source Files\GFX</Filter>
     </ClCompile>
+    <ClCompile Include="src\GFX\Resources\FrameBuffer.cpp">
+      <Filter>Source Files\GFX\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GFX\Resources\Quad.cpp">
+      <Filter>Source Files\GFX\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GFX\Resources\ShaderProgram.cpp">
+      <Filter>Source Files\GFX\Resources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\GFX\gfx_system.hpp">
@@ -50,5 +62,22 @@
     <ClInclude Include="src\GFX\Resources\Texture.hpp">
       <Filter>Header Files\GFX\Resources</Filter>
     </ClInclude>
+    <ClInclude Include="src\GFX\Resources\Quad.hpp">
+      <Filter>Header Files\GFX\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GFX\Resources\ShaderProgram.hpp">
+      <Filter>Header Files\GFX\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GFX\Resources\FrameBuffer.hpp">
+      <Filter>Header Files\GFX\Resources</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\Shaders\screen.frag">
+      <Filter>Source Files\Shaders</Filter>
+    </None>
+    <None Include="src\Shaders\screen.vert">
+      <Filter>Source Files\Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

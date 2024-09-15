@@ -10,4 +10,6 @@ public:
 	void Bind();
 private:
 	GLuint mFbo;
+	GLuint mTexHandle;
+	GLuint mRbo;
 };

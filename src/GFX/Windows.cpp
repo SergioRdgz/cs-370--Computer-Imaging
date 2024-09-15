@@ -17,7 +17,6 @@ namespace  Window
 		window = SDL_CreateWindow(window_name.c_str(), 100, 100, width, height, SDL_WINDOW_OPENGL);
 
 
-		//window = SDL_CreateWindow("Chaos For Sale", 100, 100, width, height, SDL_WINDOW_OPENGL);
 		if (window == nullptr)
 		{
 			std::cout << "sdl_create window error" << SDL_GetError() << std::endl;

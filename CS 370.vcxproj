@@ -94,14 +94,14 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>./include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./include;./src;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>./lib</AdditionalLibraryDirectories>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
-      <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies);SDL2.lib;glew32.lib</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;SDL2.lib;glew32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;$(CoreLibraryDependencies);%(AdditionalDependencies);SDL2.lib;glew32.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -121,7 +121,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>./lib</AdditionalLibraryDirectories>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
-      <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies);SDL2.lib;glew32.lib</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;SDL2.lib;glew32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;$(CoreLibraryDependencies);%(AdditionalDependencies);SDL2.lib;glew32.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -130,14 +130,14 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>.\include;.;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./include;./src;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>./lib</AdditionalLibraryDirectories>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
-      <AdditionalDependencies>SDL2.lib;glew32.lib;$(CoreLibraryDependencies);%(AdditionalDependencies);SDL2.lib;glew32.lib</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;SDL2.lib;glew32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;SDL2.lib;glew32.lib;$(CoreLibraryDependencies);%(AdditionalDependencies);SDL2.lib;glew32.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -157,19 +157,29 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>./lib</AdditionalLibraryDirectories>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
-      <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies);SDL2.lib;glew32.lib</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;SDL2.lib;glew32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;$(CoreLibraryDependencies);%(AdditionalDependencies);SDL2.lib;glew32.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\GFX\gfx_system.cpp" />
+    <ClCompile Include="src\GFX\Resources\FrameBuffer.cpp" />
+    <ClCompile Include="src\GFX\Resources\Quad.cpp" />
+    <ClCompile Include="src\GFX\Resources\ShaderProgram.cpp" />
     <ClCompile Include="src\GFX\Resources\Texture.cpp" />
     <ClCompile Include="src\GFX\Windows.cpp" />
     <ClCompile Include="src\Main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\GFX\gfx_system.hpp" />
+    <ClInclude Include="src\GFX\Resources\FrameBuffer.hpp" />
+    <ClInclude Include="src\GFX\Resources\Quad.hpp" />
+    <ClInclude Include="src\GFX\Resources\ShaderProgram.hpp" />
     <ClInclude Include="src\GFX\Resources\Texture.hpp" />
     <ClInclude Include="src\GFX\Window.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\Shaders\screen.frag" />
+    <None Include="src\Shaders\screen.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -23,7 +23,7 @@ void Quad::Initialize()
 	// Create positions buffer
 	glBindVertexArray(mVao);
 	glBindBuffer(GL_ARRAY_BUFFER, mVbo);
-	glBufferData(GL_ARRAY_BUFFER, static_cast<GLsizei>(sizeof(Meshes::vertices)), Meshes::vertices, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, static_cast<GLsizei>(sizeof(float)*4*12), Meshes::vertices, GL_STATIC_DRAW);
 
 	// Positions
 	glEnableVertexAttribArray(0);
@@ -41,5 +41,7 @@ void Quad::Render()
 	// Bind and draw vertices
 	glBindVertexArray(mVao);
 
-	 glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
+	glDrawArrays(GL_TRIANGLES, 0, (unsigned)3);
 }

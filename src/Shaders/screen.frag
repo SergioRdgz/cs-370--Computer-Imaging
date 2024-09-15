@@ -9,5 +9,5 @@ layout(location = 4) uniform sampler2D texture0;
 void main()
 {
     vec3 col = texture(texture0, TexCoords).rgb;
-    FragColor = vec4(1.0f,0.0f,0.0f, 1.0);
+    FragColor = vec4(col, 1.0);
 } 

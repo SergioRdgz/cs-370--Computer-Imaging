@@ -22,7 +22,7 @@ public:
 
     //render functions
     void Render(); //just for testing render
-    //load image function
+    void RenderFinalBufferToScreen();
 
     //resize function (scaling everything that needs to do so) 
 

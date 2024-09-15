@@ -8,8 +8,8 @@ public:
 	void Create();
 	void Delete();
 	void Bind();
+	GLuint mTexHandle;
 private:
 	GLuint mFbo;
-	GLuint mTexHandle;
 	GLuint mRbo;
 };

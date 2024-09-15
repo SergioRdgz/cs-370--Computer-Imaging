@@ -4,9 +4,12 @@ namespace Meshes
 {
 	//temporal thing, just want to get this working
 	float vertices[] = {
-		0.0f, 0.0f,0.0f,0.0f,
-		1.0f, 0.0f,1.0f,1.0f,
-		0.0f,1.0f,0.0f,1.0f
+		-1.0f, -1.0f,0.0f,0.0f,
+		1.0f, -1.0f,1.0f,0.0f,
+		-1.0f,1.0f,0.0f,1.0f,
+		1.0f, -1.0f,1.0f,0.0f,
+		1.0f,1.0f,1.0f,1.0f,
+		-1.0f,1.0f,0.0f,1.0f
 	};
 }
 void Quad::Destroy()
@@ -43,5 +46,5 @@ void Quad::Render()
 
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
-	glDrawArrays(GL_TRIANGLES, 0, (unsigned)3);
+	glDrawArrays(GL_TRIANGLES, 0, (unsigned)6);
 }

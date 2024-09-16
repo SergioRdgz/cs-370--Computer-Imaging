@@ -77,7 +77,8 @@ void gfx_system::Initialize()
 	
 	//initialize frame buffers
 	mFinalBuffer.Create();
-	
+	mProcessedBuffer.Create();
+
 	//initialize whatever else needs to do so
 	mQuadModel.Initialize();
 
@@ -149,14 +150,30 @@ void gfx_system::RenderImages()
 	//set the texture
 	mQuadModel.Render();
 
-
 	//draw image 2
-
 	mImageQuad->SetUniform(0, Mtx2);
 	mImageQuad->SetUniform("hasTexture", false);
 	//set the texture
 	mQuadModel.Render();
 
+	
+	//do the post process on the 3 quad
+	mProcessedBuffer.Bind();
+	glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT);
+
+	mQuadToScreen->Use();
+	mQuadModel.Render();
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+	mImageQuad->Use();
+	mFinalBuffer.Bind();
+	mImageQuad->SetUniform(0, Mtx3);
+	mImageQuad->SetUniform("hasTexture", false);
+	glBindTexture(GL_TEXTURE_2D, mProcessedBuffer.mTexHandle);
+	mQuadModel.Render();
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 	
 }

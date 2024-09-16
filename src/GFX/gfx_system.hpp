@@ -42,7 +42,7 @@ private:
         // Final frame buffer
     FrameBuffer mFinalBuffer;
         // processed frame buffer (image 1 (whatever operation) image 2)
-        
+    FrameBuffer mProcessedBuffer;        
     glm::mat4 Mtx3;
         //shaders for different effects
     ShaderProgram* mQuadToScreen = nullptr;

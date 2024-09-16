@@ -15,7 +15,6 @@ vec4 ChooseColor()
     }
     else
         return vec4(0.5f,0.5f,0.5f,1.0f);
-
 }
 void main()
 {

@@ -79,5 +79,11 @@
     <None Include="src\Shaders\screen.vert">
       <Filter>Source Files\Shaders</Filter>
     </None>
+    <None Include="src\Shaders\quad.frag">
+      <Filter>Source Files\Shaders</Filter>
+    </None>
+    <None Include="src\Shaders\quad.vert">
+      <Filter>Source Files\Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

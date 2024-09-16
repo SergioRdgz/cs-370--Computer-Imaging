@@ -5,7 +5,7 @@
 #include "GFX/Resources/FrameBuffer.hpp"
 #include "GFX/Resources/Quad.hpp"
 #include "GFX/Resources/ShaderProgram.hpp"
-
+#include <glm/mat4x4.hpp>
 
 class gfx_system
 {
@@ -23,7 +23,8 @@ public:
     //render functions
     void Render(); //just for testing render
     void RenderFinalBufferToScreen();
-
+    void RenderImages();
+    void RenderThird();
     //resize function (scaling everything that needs to do so) 
 
 private:
@@ -33,16 +34,17 @@ private:
     Quad mQuadModel;
     //saved data 
         // image 1
-        // image 1s matrix
+    glm::mat4 Mtx1;
         //
         // image 2
-        // image 2s matrix
+    glm::mat4 Mtx2;
         
         // Final frame buffer
     FrameBuffer mFinalBuffer;
         // processed frame buffer (image 1 (whatever operation) image 2)
         
-        // processed images matrix
+    glm::mat4 Mtx3;
         //shaders for different effects
     ShaderProgram* mQuadToScreen = nullptr;
+    ShaderProgram* mImageQuad = nullptr;
 };

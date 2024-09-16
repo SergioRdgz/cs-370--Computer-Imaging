@@ -178,6 +178,8 @@
     <ClInclude Include="src\GFX\Window.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="src\Shaders\quad.frag" />
+    <None Include="src\Shaders\quad.vert" />
     <None Include="src\Shaders\screen.frag" />
     <None Include="src\Shaders\screen.vert" />
   </ItemGroup>

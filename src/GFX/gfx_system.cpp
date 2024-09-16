@@ -2,7 +2,8 @@
 #include "GFX/Window.hpp"
 #include <GL/glew.h>
 #include <iostream>
-#include <glm/glm.hpp>
+//#include <glm/glm.hpp>
+#include <glm/mat4x4.hpp>
 #include <glm/ext/matrix_transform.hpp>
 
 namespace {
@@ -72,10 +73,18 @@ void gfx_system::Initialize()
 
 	//initialize shaders
 	mQuadToScreen = ShaderProgram::CreateShaderProgram("src\\shaders\\screen.vert", "src\\shaders\\screen.frag");
+	mImageQuad = ShaderProgram::CreateShaderProgram("src\\shaders\\quad.vert", "src\\shaders\\quad.frag");
+	
 	//initialize frame buffers
 	mFinalBuffer.Create();
+	
 	//initialize whatever else needs to do so
 	mQuadModel.Initialize();
+
+	Mtx1 =glm::translate(glm::mat4(1.0f),glm::vec3(-0.5f,0.5f,0.0f))* glm::scale(glm::mat4(1.0f),glm::vec3(0.40f,0.40f,1.0f)); 
+	Mtx2 =glm::translate(glm::mat4(1.0f),glm::vec3(0.5f,0.5f,0.0f))* glm::scale(glm::mat4(1.0f),glm::vec3(0.40f,0.40f,1.0f)); 
+	Mtx3 =glm::translate(glm::mat4(1.0f),glm::vec3(0.0f,-0.5f,0.0f))* glm::scale(glm::mat4(1.0f),glm::vec3(0.40f,0.40f,1.0f)); 
+	
 }
 
 void gfx_system::ShutDown()
@@ -95,20 +104,9 @@ void gfx_system::Update()
 void gfx_system::Render()
 {
 
-	int width, height;
-	Window::GetWindowWidthHeight(&width, &height);
-
-	glViewport(0, 0, width, height);
-	mFinalBuffer.Bind();
-	
-	glClearColor(1.0f, 1.0f, 0.0f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT);
-
-	glm::mat4 testing;
+	RenderImages();
 	
 	
-	testing = glm::translate(testing, glm::vec3());
-
 	//render the whatever the final buffer has into the screen
 	//and swap buffers
 	RenderFinalBufferToScreen();
@@ -126,9 +124,39 @@ void gfx_system::RenderFinalBufferToScreen()
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	mQuadToScreen->Use();
-	mQuadModel.Render();
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, mFinalBuffer.mTexHandle);
+	mQuadModel.Render();
 
 	SDL_GL_SwapWindow(Window::GetWindow());
+}
+
+void gfx_system::RenderImages()
+{
+	int width, height;
+	Window::GetWindowWidthHeight(&width, &height);
+
+	glViewport(0, 0, width, height);
+	mFinalBuffer.Bind();
+
+	glClearColor(0.2f, 0.0f, 0.0f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT);
+
+	//draw image 1
+	mImageQuad->Use();
+	mImageQuad->SetUniform(0, Mtx1);
+	mImageQuad->SetUniform("hasTexture", false);
+	//set the texture
+	mQuadModel.Render();
+
+
+	//draw image 2
+
+	mImageQuad->SetUniform(0, Mtx2);
+	mImageQuad->SetUniform("hasTexture", false);
+	//set the texture
+	mQuadModel.Render();
+
+
+	
 }

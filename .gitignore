@@ -23,6 +23,7 @@ Editor/EditorPreferences.json
 
 #data/
 .zip
+data/*
 data/test/*
 data/Meshes/*
 data/Audios/*

@@ -1,6 +1,11 @@
+#include "imgui/imgui.h"
+#include "imgui/imgui_impl_sdl2.h"
+#include "imgui/imgui_impl_opengl3.h"
+
 #include "GFX/Window.hpp"
 #include "GFX/gfx_system.hpp"
 #include <iostream>
+
 #ifdef _WIN32
 #undef main
 #endif

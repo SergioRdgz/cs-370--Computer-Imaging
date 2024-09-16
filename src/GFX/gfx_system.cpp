@@ -174,6 +174,5 @@ void gfx_system::RenderImages()
 	glBindTexture(GL_TEXTURE_2D, mProcessedBuffer.mTexHandle);
 	mQuadModel.Render();
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
-	
+		
 }

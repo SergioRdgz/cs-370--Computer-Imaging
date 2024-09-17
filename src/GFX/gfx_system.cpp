@@ -109,7 +109,6 @@ void gfx_system::Render()
 	
 	
 	//render the whatever the final buffer has into the screen
-	//and swap buffers
 	RenderFinalBufferToScreen();
 }
 
@@ -129,7 +128,7 @@ void gfx_system::RenderFinalBufferToScreen()
 	glBindTexture(GL_TEXTURE_2D, mFinalBuffer.mTexHandle);
 	mQuadModel.Render();
 
-	SDL_GL_SwapWindow(Window::GetWindow());
+	
 }
 
 void gfx_system::RenderImages()

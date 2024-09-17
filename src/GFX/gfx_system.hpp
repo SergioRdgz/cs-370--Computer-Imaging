@@ -27,8 +27,8 @@ public:
     void RenderThird();
     //resize function (scaling everything that needs to do so) 
 
-private:
     SDL_GLContext mContext = nullptr;
+private:
 
     //quad model
     Quad mQuadModel;

@@ -7,10 +7,13 @@
 #include <iostream>
 
 #include "opencv2/opencv.hpp"
+#include <opencv2/core/utils/logger.hpp>
 
 #ifdef _WIN32
 #undef main
 #endif
+
+
 #include <filesystem>
 
 namespace fs = std::filesystem;
@@ -29,9 +32,20 @@ std::vector<std::string> ListFiles(const std::string& path) {
 	return files;
 }
 
-//This function will only take care of the selection as the name says
-//no image will be loaded here
-void SelectImage(const char* path, const char* tittle ,cv::String& selected)
+void OpenImage(const char* filePath, cv::Mat& image) {
+	image = cv::imread(filePath);
+	if (image.empty()) {
+		std::cerr << "Error loading image: " << filePath << std::endl;
+	}
+	else {
+		std::cout << "Image loaded successfully: " << filePath << std::endl;
+		cv::imshow("Loaded Image", image);
+		cv::waitKey(0);  // Wait for a key press to close the window
+	}
+}
+
+
+void SelectImage(const char* path, const char* tittle ,cv::String& selected, cv::Mat& image)
 {
 	if (ImGui::BeginCombo(tittle, selected.c_str()))
 	{
@@ -56,6 +70,8 @@ void SelectImage(const char* path, const char* tittle ,cv::String& selected)
 
 		//in the oposite case just save the new thing
 		selected = newSelection;
+
+		OpenImage(selected.c_str(), image);
 		
 	}
 }
@@ -85,8 +101,15 @@ int main(void)
 	ImGui_ImplSDL2_InitForOpenGL(Window::GetWindow(), &gfx_system.mContext);
 	ImGui_ImplOpenGL3_Init("#version 330");
 
-	cv::String selected1 = "";
 
+
+	// Set OpenCV logging level to silent
+	cv::utils::logging::setLogLevel(cv::utils::logging::LOG_LEVEL_SILENT);
+
+	cv::String selected1 = "";
+	cv::String selected2 = "";
+	cv::Mat image1;
+	cv::Mat image2;
 	while (run)
 	{
 
@@ -112,17 +135,13 @@ int main(void)
 		ImGui::NewFrame();
 
 		//graphics things hereS
-		gfx_system.Update();
+			//gfx_system.Update();
 		gfx_system.Render();
 		//imgui things here
 		ImGui::Begin(" testing testing imgui ");
-		//ImGui::Text(" does this really work? ");
-		//bool test;
-		//ImGui::Checkbox("just for test", &test);
-
-		////do a file explorer with imgui to get in a string the image to open
-		//
-		SelectImage("images", "Image 1", selected1);
+		
+		SelectImage("images", "Image 1", selected1,image1);
+		SelectImage("images", "Image 2", selected2,image2);
 
 		
 		ImGui::End();

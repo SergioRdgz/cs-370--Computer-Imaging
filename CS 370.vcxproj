@@ -166,6 +166,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\GFX\gfx_system.cpp" />
+    <ClCompile Include="src\GFX\ImageProcessing.cpp" />
     <ClCompile Include="src\GFX\Resources\FrameBuffer.cpp" />
     <ClCompile Include="src\GFX\Resources\Quad.cpp" />
     <ClCompile Include="src\GFX\Resources\ShaderProgram.cpp" />
@@ -182,6 +183,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\GFX\gfx_system.hpp" />
+    <ClInclude Include="src\GFX\ImageProcessing.hpp" />
     <ClInclude Include="src\GFX\Resources\FrameBuffer.hpp" />
     <ClInclude Include="src\GFX\Resources\Quad.hpp" />
     <ClInclude Include="src\GFX\Resources\ShaderProgram.hpp" />

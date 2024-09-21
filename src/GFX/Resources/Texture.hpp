@@ -1,6 +1,6 @@
 #pragma once
 #include <GL/glew.h>
-
+#include <opencv2/opencv.hpp>
 
 class Texture
 {
@@ -9,7 +9,7 @@ public:
 	Texture();
 	~Texture();
 
-	
+	void CopyFromMat(cv::Mat& image);
 	void LoadTexture(const char* filename);
 	
 	GLuint GetID();

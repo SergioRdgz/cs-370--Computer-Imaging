@@ -9,6 +9,10 @@
 #include "opencv2/opencv.hpp"
 #include <opencv2/core/utils/logger.hpp>
 
+
+#include "GFX/Resources/Texture.hpp"
+#include "GFX/ImageProcessing.hpp"
+
 #ifdef _WIN32
 #undef main
 #endif
@@ -17,6 +21,8 @@
 #include <filesystem>
 
 namespace fs = std::filesystem;
+
+
 
 // Function to list files in a directory
 std::vector<std::string> ListFiles(const std::string& path) {
@@ -32,20 +38,21 @@ std::vector<std::string> ListFiles(const std::string& path) {
 	return files;
 }
 
-void OpenImage(const char* filePath, cv::Mat& image) {
+void OpenImage(const char* filePath, cv::Mat& image)
+{
 	image = cv::imread(filePath);
 	if (image.empty()) {
 		std::cerr << "Error loading image: " << filePath << std::endl;
 	}
-	else {
+	else 
+	{
 		std::cout << "Image loaded successfully: " << filePath << std::endl;
 		cv::imshow("Loaded Image", image);
-		cv::waitKey(0);  // Wait for a key press to close the window
 	}
 }
 
 
-void SelectImage(const char* path, const char* tittle ,cv::String& selected, cv::Mat& image)
+void SelectImage(const char* path, const char* tittle ,cv::String& selected, cv::Mat& image, Texture& Image, bool& loaded)
 {
 	if (ImGui::BeginCombo(tittle, selected.c_str()))
 	{
@@ -72,8 +79,58 @@ void SelectImage(const char* path, const char* tittle ,cv::String& selected, cv:
 		selected = newSelection;
 
 		OpenImage(selected.c_str(), image);
+
+		Image.CopyFromMat(image);
 		
 	}
+}
+
+bool SelectOperation(ImageOperations& selected)
+{
+	bool newselect = false;
+	if (ImGui::BeginCombo("Operations", "Select Operation"))
+	{
+		ImageOperations& newSelection = selected;
+		
+		if (ImGui::Selectable("Add"))
+		{
+			newSelection = oAdd;
+			newselect =  true;
+		}
+		if (ImGui::Selectable("Substract"))
+		{
+			newSelection = oSubstract;
+			newselect =  true;
+		}
+		if (ImGui::Selectable("Multiply"))
+		{
+			newSelection = oMultiply;
+			newselect =  true;
+		}
+		if (ImGui::Selectable("Negative"))
+		{
+			newSelection = oNegative;
+			newselect =  true;
+		}
+		if (ImGui::Selectable("Gamma Correction"))
+		{
+			newSelection = oGammaCorrection;
+			newselect =  true;
+		}
+		if (ImGui::Selectable("Log Transform"))
+		{
+			newSelection = oLogTransform;
+			newselect =  true;
+		}
+		if (ImGui::Selectable("Neighbours"))
+		{
+			newSelection = oNeighbours;
+			newselect =  true;
+		}
+		ImGui::EndCombo();
+
+	}
+	return newselect;
 }
 
 int main(void)
@@ -108,8 +165,15 @@ int main(void)
 
 	cv::String selected1 = "";
 	cv::String selected2 = "";
+
 	cv::Mat image1;
 	cv::Mat image2;
+
+	bool loaded1 = false;
+	bool loaded2 = false;
+
+	ImageOperations operation = oNone;
+
 	while (run)
 	{
 
@@ -134,23 +198,33 @@ int main(void)
 		ImGui_ImplSDL2_NewFrame();
 		ImGui::NewFrame();
 
-		//graphics things hereS
-			//gfx_system.Update();
-		gfx_system.Render();
+		
+		gfx_system.Render(loaded1, loaded2, 0);
+
 		//imgui things here
 		ImGui::Begin(" testing testing imgui ");
 		
-		SelectImage("images", "Image 1", selected1,image1);
-		SelectImage("images", "Image 2", selected2,image2);
+		SelectImage("images", "Image 1", selected1,image1,gfx_system.image1,loaded1);
+		SelectImage("images", "Image 2", selected2,image2,gfx_system.image2,loaded2);
 
-		
+		bool changed = SelectOperation(operation);
 		ImGui::End();
+		cv::Mat result;
+		if (changed)
+		{
+			
+			ProcessImage(image1, image2, result, operation);
+			cv::imshow("result", result);
+			gfx_system.finalImage.CopyFromMat(result);
+		}
+		
+		
 		
 
 		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
-		SDL_GL_SwapWindow(Window::GetWindow());
+		SDL_GL_SwapWindow(Window::GetWindow());		
 	}
 	
 	ImGui_ImplOpenGL3_Shutdown();

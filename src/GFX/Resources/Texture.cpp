@@ -43,3 +43,30 @@ GLuint Texture::GetID()
 {
 	return mID;
 }
+
+void Texture::CopyFromMat(cv::Mat& image)
+{
+	if (image.empty())
+	{
+		std::cout << "Could not copy from empty image" << std::endl;
+		return;
+	}
+
+	glDeleteTextures(1, &mID);
+
+	// Create texture
+	glGenTextures(1, &mID);
+	glBindTexture(GL_TEXTURE_2D, mID);
+
+	cv::cvtColor(image, image, cv::COLOR_BGR2RGB);
+	// Give pixel data to opengl
+
+	mWidth = image.cols;
+	mHeight = image.rows;
+	mComp = image.channels();
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image.cols, image.rows, 0, GL_BGR, GL_UNSIGNED_BYTE, image.data);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+}

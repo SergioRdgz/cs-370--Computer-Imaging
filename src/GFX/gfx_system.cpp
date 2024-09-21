@@ -102,10 +102,19 @@ void gfx_system::Update()
 
 }
 
-void gfx_system::Render()
+void gfx_system::Render(bool loaded1, bool loaded2, char ShowImages)
 {
+	/*int width, height;
+	Window::GetWindowWidthHeight(&width, &height);
 
-	RenderImages();
+	glViewport(0, 0, width, height);
+	mFinalBuffer.Bind();
+
+	glClearColor(0.2f, 0.0f, 0.0f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT);
+
+
+	RenderImages();*/
 	
 	
 	//render the whatever the final buffer has into the screen
@@ -125,7 +134,7 @@ void gfx_system::RenderFinalBufferToScreen()
 
 	mQuadToScreen->Use();
 	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, mFinalBuffer.mTexHandle);
+	glBindTexture(GL_TEXTURE_2D, finalImage.GetID());
 	mQuadModel.Render();
 
 	
@@ -133,15 +142,6 @@ void gfx_system::RenderFinalBufferToScreen()
 
 void gfx_system::RenderImages()
 {
-	int width, height;
-	Window::GetWindowWidthHeight(&width, &height);
-
-	glViewport(0, 0, width, height);
-	mFinalBuffer.Bind();
-
-	glClearColor(0.2f, 0.0f, 0.0f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT);
-
 	//draw image 1
 	mImageQuad->Use();
 	mImageQuad->SetUniform(0, Mtx1);
@@ -154,24 +154,18 @@ void gfx_system::RenderImages()
 	mImageQuad->SetUniform("hasTexture", false);
 	//set the texture
 	mQuadModel.Render();
+}
 
-	
-	//do the post process on the 3 quad
+void gfx_system::RenderThird()
+{
 	mProcessedBuffer.Bind();
 	glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	mQuadToScreen->Use();
+
 	mQuadModel.Render();
 
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
-	mImageQuad->Use();
-	mFinalBuffer.Bind();
-	mImageQuad->SetUniform(0, Mtx3);
-	mImageQuad->SetUniform("hasTexture", false);
-	glBindTexture(GL_TEXTURE_2D, mProcessedBuffer.mTexHandle);
-	mQuadModel.Render();
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-		
 }

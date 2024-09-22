@@ -170,6 +170,9 @@ int main(void)
 	bool loaded1 = false;
 	bool loaded2 = false;
 
+	float c = 1.0f;
+	float y = 1.0f;
+
 	ImageOperations operation = oNone;
 
 	while (run)
@@ -200,18 +203,27 @@ int main(void)
 		gfx_system.Render();
 
 		//imgui things here
-		ImGui::Begin(" testing testing imgui ");
+		ImGui::Begin(" Image Processing menu ");
 		
 		SelectImage("images", "Image 1", selected1,image1,gfx_system.image1,loaded1);
 		SelectImage("images", "Image 2", selected2,image2,gfx_system.image2,loaded2);
 
-		bool changed = SelectOperation(operation);
+		SelectOperation(operation);
+		if (operation == oGammaCorrection || operation == oLogTransform)
+		{
+			ImGui::DragFloat("c", &c,0.01f, 0.0f, 5.0f);
+		}
+		if (operation == oGammaCorrection)
+		{
+			ImGui::DragFloat("gama", &y, 0.1f, 0.3f, 10.0f);
+		}
+
+		bool doOperation = ImGui::Button("Do Operation");
 		ImGui::End();
 		cv::Mat result;
-		if (changed)
-		{
-			 
-			ProcessImage(image1, image2, result, operation);
+		if (doOperation)
+		{			 
+			ProcessImage(image1, image2, result, operation,c,y);
 			cv::imshow("result", result);
 			gfx_system.finalImage.CopyFromMat(result);
 		}

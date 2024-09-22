@@ -1,7 +1,11 @@
 #include "GFX/ImageProcessing.hpp"
 
+#include <opencv2/imgproc.hpp>
+#include <opencv2/opencv.hpp>
 
-void ProcessImage(cv::Mat& image1, cv::Mat& image2, cv::Mat& result, ImageOperations which)
+
+
+void ProcessImage(cv::Mat& image1, cv::Mat& image2, cv::Mat& result, ImageOperations which, float c, float y)
 {
 	cv::Mat resized;
 	bool resized1= false;
@@ -29,10 +33,10 @@ void ProcessImage(cv::Mat& image1, cv::Mat& image2, cv::Mat& result, ImageOperat
 		}
 	}
 	
-	ActualOperation(resized1 ? resized : image1, resized2 ? resized: image2, result,which);
+	ActualOperation(resized1 ? resized : image1, resized2 ? resized: image2, result,which,c,y);
 }
 
-void ActualOperation(cv::Mat image1, cv::Mat image2, cv::Mat& result, ImageOperations which)
+void ActualOperation(cv::Mat image1, cv::Mat image2, cv::Mat& result, ImageOperations which, float c, float y)
 {
 	switch (which)
 	{
@@ -49,10 +53,10 @@ void ActualOperation(cv::Mat image1, cv::Mat image2, cv::Mat& result, ImageOpera
 		Negative(image1, result);
 		break;
 	case oGammaCorrection:
-		GammaCorrection(image1, result);
+		GammaCorrection(image1, result,c,y);
 		break;
 	case oLogTransform:
-		LogTransform(image1, result);
+		LogTransform(image1, result,c);
 		break;
 	case oNeighbours:
 		Neighbours(image1, result);
@@ -81,14 +85,37 @@ void Negative(cv::Mat& imgae1, cv::Mat& result)
 	cv::subtract(cv::Scalar::all(255), imgae1, result);
 }
 
-void GammaCorrection(cv::Mat& image1, cv::Mat& result)
+void GammaCorrection(cv::Mat& image1, cv::Mat& result,float c,float y)
 {
-	//lets see what to do later on 
+	try
+	{
+		//conver to a float value
+		image1.convertTo(image1, CV_64F, 1.0 / 255.0);
+		cv::pow(image1, (double)(1.0/y), result);
+
+		//convert back to a grey scale image
+		result.convertTo(result, CV_8U, 255.0);
+		result *= c; 
+	}
+	catch (cv::Exception& e)
+	{
+		std::cout << e.what() << std::endl;
+	}
 }
 
-void LogTransform(cv::Mat& image1, cv::Mat& result)
+void LogTransform(cv::Mat& image1, cv::Mat& result, float c)
 {
-	//lets see what to do later on 
+	try
+	{
+		image1.convertTo(image1, CV_64F, 1.0 / 255.0);
+		cv::log(cv::Scalar::all(1)+image1, result);
+		result.convertTo(result, CV_8U, 255.0);
+		result *= c;
+	}
+	catch (cv::Exception& e)
+	{
+	 std::cout << e.what() << std::endl;
+	}
 }
 
 void Neighbours(cv::Mat& image1, cv::Mat& result)

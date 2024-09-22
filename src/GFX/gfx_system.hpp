@@ -22,10 +22,7 @@ public:
     void Update();
 
     //render functions
-    void Render(bool loaded1, bool loaded2, char ShowImages); //just for testing render
-    void RenderFinalBufferToScreen();
-    void RenderImages();
-    void RenderThird();
+    void Render(); 
     //resize function (scaling everything that needs to do so) 
 
     SDL_GLContext mContext = nullptr;
@@ -39,19 +36,10 @@ public:
 
 private:
        
-    //saved data 
-    glm::mat4 Mtx1;
-    glm::mat4 Mtx2;
         
 
     //quad model
-    Quad mQuadModel;
-        // Final frame buffer
-    FrameBuffer mFinalBuffer;
-        // processed frame buffer (image 1 (whatever operation) image 2)
-    FrameBuffer mProcessedBuffer;        
-    glm::mat4 Mtx3;
+    Quad mQuadModel;   
         //shaders for different effects
     ShaderProgram* mQuadToScreen = nullptr;
-    ShaderProgram* mImageQuad = nullptr;
 };

@@ -73,26 +73,15 @@ void gfx_system::Initialize()
 
 	//initialize shaders
 	mQuadToScreen = ShaderProgram::CreateShaderProgram("src\\shaders\\screen.vert", "src\\shaders\\screen.frag");
-	mImageQuad = ShaderProgram::CreateShaderProgram("src\\shaders\\quad.vert", "src\\shaders\\quad.frag");
-	
-	//initialize frame buffers
-	mFinalBuffer.Create();
-	mProcessedBuffer.Create();
+
 
 	//initialize whatever else needs to do so
 	mQuadModel.Initialize();
-
-	Mtx1 =glm::translate(glm::mat4(1.0f),glm::vec3(-0.5f,0.5f,0.0f))* glm::scale(glm::mat4(1.0f),glm::vec3(0.40f,0.40f,1.0f)); 
-	Mtx2 =glm::translate(glm::mat4(1.0f),glm::vec3(0.5f,0.5f,0.0f))* glm::scale(glm::mat4(1.0f),glm::vec3(0.40f,0.40f,1.0f)); 
-	Mtx3 =glm::translate(glm::mat4(1.0f),glm::vec3(0.0f,-0.5f,0.0f))* glm::scale(glm::mat4(1.0f),glm::vec3(0.40f,0.40f,1.0f)); 
-	
 }
 
 void gfx_system::ShutDown()
 {
 	mQuadModel.Destroy();
-
-	mFinalBuffer.Delete();
 
 	delete mQuadToScreen;
 }
@@ -102,13 +91,7 @@ void gfx_system::Update()
 
 }
 
-void gfx_system::Render(bool loaded1, bool loaded2, char ShowImages)
-{
-	//render the whatever the final buffer has into the screen
-	RenderFinalBufferToScreen();
-}
-
-void gfx_system::RenderFinalBufferToScreen()
+void gfx_system::Render()
 {
 	int width, height;
 	Window::GetWindowWidthHeight(&width, &height);
@@ -119,40 +102,12 @@ void gfx_system::RenderFinalBufferToScreen()
 	glClearColor(0.0f, 1.0f, 0.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
 
+
 	mQuadToScreen->Use();
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, finalImage.GetID());
-	mQuadModel.Render();
 
-	
-}
-
-void gfx_system::RenderImages()
-{
-	//draw image 1
-	mImageQuad->Use();
-	mImageQuad->SetUniform(0, Mtx1);
-	mImageQuad->SetUniform("hasTexture", false);
-	//set the texture
-	mQuadModel.Render();
-
-	//draw image 2
-	mImageQuad->SetUniform(0, Mtx2);
-	mImageQuad->SetUniform("hasTexture", false);
-	//set the texture
 	mQuadModel.Render();
 }
 
-void gfx_system::RenderThird()
-{
-	mProcessedBuffer.Bind();
-	glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT);
 
-	mQuadToScreen->Use();
-
-	mQuadModel.Render();
-
-
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-}

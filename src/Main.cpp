@@ -199,7 +199,7 @@ int main(void)
 		ImGui::NewFrame();
 
 		
-		gfx_system.Render(loaded1, loaded2, 0);
+		gfx_system.Render();
 
 		//imgui things here
 		ImGui::Begin(" testing testing imgui ");
@@ -212,7 +212,7 @@ int main(void)
 		cv::Mat result;
 		if (changed)
 		{
-			
+			 
 			ProcessImage(image1, image2, result, operation);
 			cv::imshow("result", result);
 			gfx_system.finalImage.CopyFromMat(result);

@@ -9,7 +9,7 @@ public:
 	Texture();
 	~Texture();
 
-	void CopyFromMat(cv::Mat& image);
+	void CopyFromMat(cv::Mat image);
 	void LoadTexture(const char* filename);
 	
 	GLuint GetID();

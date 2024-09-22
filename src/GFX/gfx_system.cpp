@@ -104,19 +104,6 @@ void gfx_system::Update()
 
 void gfx_system::Render(bool loaded1, bool loaded2, char ShowImages)
 {
-	/*int width, height;
-	Window::GetWindowWidthHeight(&width, &height);
-
-	glViewport(0, 0, width, height);
-	mFinalBuffer.Bind();
-
-	glClearColor(0.2f, 0.0f, 0.0f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT);
-
-
-	RenderImages();*/
-	
-	
 	//render the whatever the final buffer has into the screen
 	RenderFinalBufferToScreen();
 }

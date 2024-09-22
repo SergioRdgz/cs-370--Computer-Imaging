@@ -3,6 +3,37 @@
 
 void ProcessImage(cv::Mat& image1, cv::Mat& image2, cv::Mat& result, ImageOperations which)
 {
+	cv::Mat resized;
+	bool resized1= false;
+	bool resized2= false;
+	if (image1.empty())
+	{
+		return;
+	}
+	else if (image2.empty() == false )
+	{
+		//if the size is not the same 
+			// then we see which is smaller and resize it
+		if (image1.size() != image2.size())
+		{
+			if (image1.size > image2.size)
+			{
+				resized2 = true;
+				cv::resize(image2, resized, image1.size());
+			}
+			else
+			{
+				resized1 = true;
+				cv::resize(image1, resized, image2.size());
+			}
+		}
+	}
+	
+	ActualOperation(resized1 ? resized : image1, resized2 ? resized: image2, result,which);
+}
+
+void ActualOperation(cv::Mat image1, cv::Mat image2, cv::Mat& result, ImageOperations which)
+{
 	switch (which)
 	{
 	case oAdd:
@@ -30,7 +61,6 @@ void ProcessImage(cv::Mat& image1, cv::Mat& image2, cv::Mat& result, ImageOperat
 		break;
 	}
 }
-
 void Add(cv::Mat& image1, cv::Mat& image2, cv::Mat& result)
 {
 	cv::add(image1, image2, result);

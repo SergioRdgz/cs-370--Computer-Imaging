@@ -22,8 +22,6 @@
 
 namespace fs = std::filesystem;
 
-
-
 // Function to list files in a directory
 std::vector<std::string> ListFiles(const std::string& path) {
 	std::vector<std::string> files;
@@ -47,7 +45,7 @@ void OpenImage(const char* filePath, cv::Mat& image)
 	else 
 	{
 		std::cout << "Image loaded successfully: " << filePath << std::endl;
-		cv::imshow("Loaded Image", image);
+		//cv::imshow("Loaded Image", image);
 	}
 }
 

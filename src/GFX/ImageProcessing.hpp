@@ -17,6 +17,7 @@ enum ImageOperations
 
 void ProcessImage(cv::Mat& image1, cv::Mat& image2, cv::Mat& result, ImageOperations which);
 
+void ActualOperation(cv::Mat image1, cv::Mat image2, cv::Mat& result, ImageOperations which);
 //one operation per each image operation
 
 void Add(cv::Mat& image1, cv::Mat& image2, cv::Mat& result);
